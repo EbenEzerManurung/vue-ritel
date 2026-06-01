@@ -13,7 +13,7 @@ https://github.com/EbenEzerManurung/API_GOLANG
 
 The Golang API provides database connectivity, authentication services, customer management, product management, transaction processing, and other business-related operations required by the Vue Ritel application.
 
-![React](https://img.shields.io/badge/Vue.js 3.5-blue)
+![Vue](https://img.shields.io/badge/Vue.js 3.5-blue)
 ![Vite](https://img.shields.io/badge/Vite-Latest-purple)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.x-38BDF8)
 ![PWA](https://img.shields.io/badge/PWA-Enabled-green)
