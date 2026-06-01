@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate PNG Icons</title>
+    <style>
+        body { font-family: Arial; padding: 20px; text-align: center; background: #f0f0f0; }
+        .container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+        .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; min-width: 150px; }
+        button { background: #3B82F6; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 10px; }
+        button:hover { background: #2563eb; }
+        canvas { margin-bottom: 10px; border-radius: 10px; }
+        h1 { color: #333; }
+        .info { background: #e3f2fd; padding: 10px; border-radius: 5px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <h1>🎨 Generate Icons untuk PWA</h1>
+    <div class="info">
+        <strong>📝 Instruksi:</strong> Klik tombol "Download" untuk setiap ukuran icon,<br>
+        simpan semua file ke folder <code>C:\Users\user\Music\vue\ritel\public\</code>
+    </div>
+    <div class="container" id="icons"></div>
+
+    <script>
+        const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+        const container = document.getElementById('icons');
+        
+        sizes.forEach(size => {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            
+            // Background biru gradient
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#3B82F6');
+            gradient.addColorStop(1, '#1E40AF');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+            
+            // Tulisan R putih
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = `bold ${size/2}px Arial, Helvetica, sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('R', size/2, size/2);
+            
+            const card = document.createElement('div');
+            card.className = 'card';
+            
+            // Preview
+            const preview = document.createElement('canvas');
+            preview.width = 64;
+            preview.height = 64;
+            preview.getContext('2d').drawImage(canvas, 0, 0, size, size, 0, 0, 64, 64);
+            
+            card.innerHTML = `<h3>${size}x${size}</h3>`;
+            card.appendChild(preview);
+            
+            const btn = document.createElement('button');
+            btn.textContent = `⬇️ Download icon-${size}.png`;
+            btn.onclick = () => {
+                const link = document.createElement('a');
+                link.download = `icon-${size}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            };
+            card.appendChild(btn);
+            container.appendChild(card);
+        });
+        
+        // Tambahan untuk favicon 16x16 dan 32x32
+        const extraSizes = [16, 32];
+        extraSizes.forEach(size => {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            
+            ctx.fillStyle = '#3B82F6';
+            ctx.fillRect(0, 0, size, size);
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = `bold ${size/2}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('R', size/2, size/2);
+            
+            const link = document.createElement('a');
+            link.download = size === 16 ? 'favicon.ico' : `icon-${size}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            console.log(`Downloaded ${link.download}`);
+        });
+    </script>
+</body>
+</html>
